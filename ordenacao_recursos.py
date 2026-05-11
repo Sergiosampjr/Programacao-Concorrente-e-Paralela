@@ -29,7 +29,44 @@ import threading
 import time
 import random
 import sys
+import os
 from collections import defaultdict
+from datetime import datetime
+ 
+ 
+# =============================================================
+# SISTEMA DE LOG (terminal + arquivo simultaneamente)
+# =============================================================
+ 
+class Logger:
+    """
+    Escreve cada mensagem no terminal E em um arquivo .txt.
+    Thread-safe: usa lock interno para evitar linhas misturadas.
+    """
+    def __init__(self, caminho_arquivo):
+        self._lock = threading.Lock()
+        self._arquivo = open(caminho_arquivo, "w", encoding="utf-8")
+ 
+    def log(self, msg):
+        with self._lock:
+            print(msg)
+            self._arquivo.write(msg + "\n")
+            self._arquivo.flush()
+ 
+    def fechar(self):
+        self._arquivo.close()
+ 
+ 
+# Instância global — será inicializada no main()
+logger: "Logger | None" = None
+ 
+ 
+def log(msg):
+    """Atalho global para logger.log()."""
+    if logger:
+        logger.log(msg)
+    else:
+        print(msg)
  
  
 # =============================================================
@@ -85,11 +122,11 @@ def ler_grafo(caminho):
     if not os.path.exists(caminho):
         nome = os.path.basename(caminho)
         if nome in GRAFOS_PADRAO:
-            print(f"[Aviso] '{caminho}' não encontrado. Usando grafo padrão embutido.")
+            log(f"[Aviso] '{caminho}' não encontrado. Usando grafo padrão embutido.")
             conteudo = GRAFOS_PADRAO[nome][1]
             linhas = conteudo.strip().split("\n")
         else:
-            print(f"[Erro] Arquivo '{caminho}' não encontrado.")
+            log(f"[Erro] Arquivo '{caminho}' não encontrado.")
             sys.exit(1)
     else:
         with open(caminho) as f:
@@ -234,7 +271,7 @@ class Filosofo(threading.Thread):
         self._log("terminou todas as rodadas.")
  
     def _log(self, msg):
-        print(f"[Filósofo {self.id:>2}] {msg}")
+        log(f"[Filósofo {self.id:>2}] {msg}")
  
  
 # =============================================================
@@ -245,34 +282,34 @@ def exibir_relatorio(filosofos, tempo_total, descricao_grafo):
     SEP = "=" * 68
     sep = "-" * 68
  
-    print(f"\n{SEP}")
-    print(f"  RELATÓRIO FINAL — Ordenação de Recursos")
-    print(f"  Grafo: {descricao_grafo}")
-    print(SEP)
+    log(f"\n{SEP}")
+    log(f"  RELATÓRIO FINAL — Ordenação de Recursos")
+    log(f"  Grafo: {descricao_grafo}")
+    log(SEP)
  
     # Cabeçalho
-    print(f"  {'Filósofo':<10} {'Vizinhos':>9} {'Tranquilo(s)':>13} "
-          f"{'Com Sede(s)':>12} {'Bebendo(s)':>11}")
-    print(sep)
+    log(f"  {'Filósofo':<10} {'Vizinhos':>9} {'Tranquilo(s)':>13} "
+        f"{'Com Sede(s)':>12} {'Bebendo(s)':>11}")
+    log(sep)
  
     total_espera = 0.0
     for f in filosofos:
         n_viz = len(f.adjacencias[f.id])
-        print(f"  Fil. {f.id:<6}  {n_viz:>7}     "
-              f"{f.tempo_tranquilo:>10.2f}     "
-              f"{f.tempo_com_sede:>9.2f}    "
-              f"{f.tempo_bebendo:>9.2f}")
+        log(f"  Fil. {f.id:<6}  {n_viz:>7}     "
+            f"{f.tempo_tranquilo:>10.2f}     "
+            f"{f.tempo_com_sede:>9.2f}    "
+            f"{f.tempo_bebendo:>9.2f}")
         total_espera += f.tempo_com_sede
  
     media_espera = total_espera / len(filosofos)
  
-    print(sep)
-    print(f"  Tempo total de execução : {tempo_total:.2f}s")
-    print(f"  Espera média (com sede) : {media_espera:.2f}s")
-    print()
-    print("  Avaliação de starvation:")
-    print("  (filósofos com mesmo nº de vizinhos devem ter espera similar)")
-    print(sep)
+    log(sep)
+    log(f"  Tempo total de execução : {tempo_total:.2f}s")
+    log(f"  Espera média (com sede) : {media_espera:.2f}s")
+    log("")
+    log("  Avaliação de starvation:")
+    log("  (filósofos com mesmo nº de vizinhos devem ter espera similar)")
+    log(sep)
  
     # Agrupa por número de vizinhos para facilitar avaliação de starvation
     grupos = defaultdict(list)
@@ -283,9 +320,9 @@ def exibir_relatorio(filosofos, tempo_total, descricao_grafo):
         esperas = [f.tempo_com_sede for f in grupo]
         media   = sum(esperas) / len(esperas)
         ids     = [f.id for f in grupo]
-        print(f"  Grau {grau} — Filósofos {ids} — espera média: {media:.2f}s")
+        log(f"  Grau {grau} — Filósofos {ids} — espera média: {media:.2f}s")
  
-    print(SEP)
+    log(SEP)
  
  
 # =============================================================
@@ -293,27 +330,45 @@ def exibir_relatorio(filosofos, tempo_total, descricao_grafo):
 # =============================================================
  
 def main():
+    global logger
+
     if len(sys.argv) < 2:
         print(__doc__)
-        print("Uso: python bar_filosofos.py <arquivo_grafo.txt> [n_bebidas]")
+        print("Uso: python bar_filosofos_ordenacao.py <arquivo_grafo.txt> [n_bebidas]")
         sys.exit(1)
- 
+
     caminho   = sys.argv[1]
     n_bebidas = int(sys.argv[2]) if len(sys.argv) >= 3 else 6
- 
+
+    # Cria a pasta resultados caso não exista
+    pasta_resultados = "resultados"
+    os.makedirs(pasta_resultados, exist_ok=True)
+
+    # Nome do arquivo de saída
+    nome_base = os.path.splitext(os.path.basename(caminho))[0]
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+    arq_saida = os.path.join(
+        pasta_resultados,
+        f"resultado_{nome_base}_{timestamp}.txt"
+    )
+
+    # Inicializa o logger (terminal + arquivo)
+    logger = Logger(arq_saida)
+
     # Descrição amigável do grafo
-    import os
-    nome = os.path.basename(caminho)
+    nome      = os.path.basename(caminho)
     descricao = GRAFOS_PADRAO.get(nome, ("Grafo personalizado",))[0]
- 
-    print(f"\n{'='*68}")
-    print(f"  Bar dos Filósofos — Ordenação de Recursos")
-    print(f"  Grafo  : {caminho} ({descricao})")
-    print(f"  Bebidas: {n_bebidas} por filósofo")
-    print(f"{'='*68}\n")
+
+    log(f"\n{'='*68}")
+    log(f"  Bar dos Filósofos — Ordenação de Recursos")
+    log(f"  Grafo  : {caminho} ({descricao})")
+    log(f"  Bebidas: {n_bebidas} por filósofo")
+    log(f"  Log    : {arq_saida}")
+    log(f"{'='*68}\n")
  
     n_nos, adjacencias, locks, ids_arestas = ler_grafo(caminho)
-    print(f"  {n_nos} filósofos | {len(locks)} garrafas (arestas)\n")
+    log(f"  {n_nos} filósofos | {len(locks)} garrafas (arestas)\n")
  
     filosofos = [
         Filosofo(i, adjacencias, locks, ids_arestas, n_bebidas)
@@ -329,6 +384,10 @@ def main():
  
     exibir_relatorio(filosofos, tempo_total, descricao)
  
+    logger.fechar()
+    print(f"\n  Resultados salvos em: {arq_saida}")
+ 
  
 if __name__ == "__main__":
     main()
+ 
