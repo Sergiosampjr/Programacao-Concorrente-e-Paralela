@@ -2,6 +2,7 @@ import threading
 import time
 import random
 import os
+import matplotlib.pyplot as plt
 
 class BarDosFilosofos:
     def __init__(self, matriz, num_beber_objetivo):
@@ -105,6 +106,12 @@ def executar_simulacao(caminho_arquivo, num_beber):
         for f in filosofos: f.join()
         total_time = time.time() - inicio
 
+        
+        
+        # Gera o gráfico logo após a sincronização final das threads
+        nome_limpo_caso = os.path.basename(caminho_arquivo).replace(".txt", "")
+        gerar_grafico_analise(filosofos, nome_limpo_caso) 
+
         print(f"\n{'ID':<4} | {'Tranquilo':<10} | {'Sede (Espera)':<15} | {'Bebendo':<10}")
         espera_total = 0
         for f in filosofos:
@@ -117,6 +124,38 @@ def executar_simulacao(caminho_arquivo, num_beber):
     except Exception as e:
         print(f"Erro ao processar: {e}")
 
+def gerar_grafico_analise(filosofos, nome_caso):
+    """Generates a stacked bar chart to analyze the states of the philosophers."""
+    ids = [f"F{f.id}" for f in filosofos]
+    tranquilo = [f.tempo_tranquilo for f in filosofos]
+    sede = [f.tempo_sede for f in filosofos]
+    bebendo = [f.tempo_bebendo for f in filosofos]
+
+    plt.figure(figsize=(10, 6))
+
+    # Construção das barras empilhadas (Stacked Bar Chart)
+    b1 = plt.bar(ids, tranquilo, color='#4f81bd', label='Tranquilo')
+    b2 = plt.bar(ids, sede, bottom=tranquilo, color='#c0504d', label='Com Sede (Espera)')
+    
+    # Calcula a base para a terceira barra somando as duas anteriores
+    bottom_bebendo = [t + s for t, s in zip(tranquilo, sede)]
+    b3 = plt.bar(ids, bebendo, bottom=bottom_bebendo, color='#9bbb59', label='Bebendo')
+
+    # Configurações estéticas do gráfico
+    plt.title(f'Análise de Estados e Tempos - {nome_caso}', fontsize=14, fontweight='bold')
+    plt.xlabel('Filósofos (IDs)', fontsize=12)
+    plt.ylabel('Tempo Acumulado (segundos)', fontsize=12)
+    plt.legend(loc='upper right')
+    plt.grid(axis='y', linestyle='--', alpha=0.7)
+
+    # Ajusta o layout e salva o gráfico como imagem PNG na mesma pasta do script
+    plt.tight_layout()
+    nome_arquivo_grafico = f"grafico_{nome_caso.lower().replace(' ', '_')}.png"
+    plt.savefig(nome_arquivo_grafico, dpi=300)
+    plt.close()
+    print(f"--> Gráfico salvo com sucesso: {nome_arquivo_grafico}")
+
+
 
 
 if __name__ == "__main__":
@@ -127,7 +166,7 @@ if __name__ == "__main__":
     pasta_pai = os.path.dirname(caminho_script)
     
     # 3. Definir o arquivo alvo (mude para 'caso2.txt' ou 'caso3.txt' conforme o teste)
-    target = "caso1.txt" 
+    target = "caso3.txt"
     caminho_final = os.path.join(pasta_pai, target)
     
     print(f"Buscando arquivo em: {caminho_final}")
@@ -139,3 +178,7 @@ if __name__ == "__main__":
     else:
         print(f"ERRO: O arquivo {target} não foi encontrado na pasta pai.")
         print(f"Conteúdo da pasta pai: {os.listdir(pasta_pai)}")
+
+    
+
+
