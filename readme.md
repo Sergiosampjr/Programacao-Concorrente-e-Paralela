@@ -45,34 +45,19 @@ Abaixo estão consolidados os dados coletados diretamente da execução dos caso
 ### Caso 2: Bar dos Filósofos (6 nós, 6 ciclos)
 *Grafo genérico assimétrico com variação na conectividade dos nós (máximo de 4 arestas).*
 
-* **Tempo Total de Execução:** [INSERIR TEMPO TOTAL]s
-* **Espera Média (Starvation):** [INSERIR MEDIA]s
+* **Tempo Total de Execução:** 22.05s
+* **Espera Média (Starvation):** 4.03s
 
 | ID | Tempo Tranquilo | Tempo Sede (Espera) | Tempo Bebendo |
 | :---: | :---: | :---: | :---: |
-| **F0** | 0.00s | 0.00s | 6.00s |
-| **F1** | 0.00s | 0.00s | 6.00s |
-| **F2** | 0.00s | 0.00s | 6.00s |
-| **F3** | 0.00s | 0.00s | 6.00s |
-| **F4** | 0.00s | 0.00s | 6.00s |
-| **F5** | 0.00s | 0.00s | 6.00s |
+| **F0** | 5.67s | 5.11s | 6.00s |
+| **F1** | 6.41s | 5.37s | 6.00s |
+| **F2** | 5.68s | 4.95s | 6.00s |
+| **F3** | 9.00s | 3.54s | 6.00s |
+| **F4** | 5.96s | 1.57s | 6.00s |
+| **F5** | 12.36s | 3.63s | 6.00s |
 
-* **Análise:** A assimetria do grafo reflete-se na distribuição de acessos. Filósofos com maior grau de conectividade possuem um pool maior de recursos disponíveis, o que exige um roteamento de tokens mais ativo. Apesar da assimetria, a fila de requisições descentralizada garantiu a justiça do sistema.
-
-### Caso 3: Alta Conectividade (12 nós, 3 ciclos)
-*Grafo complexo e denso de larga escala (nós com até grau n=6).*
-
-* **Tempo Total de Execução:** [INSERIR TEMPO TOTAL]s
-* **Espera Média (Starvation):** [INSERIR MEDIA]s
-
-| ID | Tempo Tranquilo | Tempo Sede (Espera) | Tempo Bebendo |
-| :---: | :---: | :---: | :---: |
-| **F0** | 0.00s | 0.00s | 3.00s |
-| **F1** | 0.00s | 0.00s | 3.00s |
-| **...**| ... | ... | ... |
-| **F11**| 0.00s | 0.00s | 3.00s |
-
-* **Análise:** Em um cenário de alta densidade, a abordagem distribuída de Chandy-Misra revela sua escalabilidade. Filósofos distantes no grafo não dependem de um controle central e podem beber simultaneamente. A contenção se dá estritamente em limites locais, otimizando a vazão geral e mantendo o sistema livre de impasses, mesmo com demandas cruzadas de até 6 recursos.
+* **Análise:** A assimetria topológica do grafo reflete-se claramente no tempo "Tranquilo". O filósofo F5, por possuir maior conectividade (grau n=4), sorteou intervalos maiores de descanso, acumulando 12.36s. Apesar da alta disputa local por recursos gerada pelos nós mais conectados (como F2, F3 e F5), a fila FIFO descentralizada do algoritmo de Chandy-Misra absorveu a carga com sucesso, garantindo que todos os nós bebessem as 6 vezes regulamentares sem sofrer inanição.
 
 ---
 
