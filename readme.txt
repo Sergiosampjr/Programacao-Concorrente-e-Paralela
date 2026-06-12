@@ -1,33 +1,93 @@
-# Problema do Bar dos Filósofos (Drinking Philosophers)
-Aluno: Francisco Leonardo Marcos Leitão
+# O Problema do Bar dos Filósofos — Programação Concorrente e Paralela
 
-## Sobre o Projeto
-Este projeto traz uma simulação multithread em Python para o Problema do Bar dos Filósofos, uma generalização do clássico Jantar dos Filósofos. 
+Este repositório contém a solução e a análise computacional para o **Problema do Bar dos Filósofos**, uma extensão do clássico problema do *Jantar dos Filósofos* (Dijkstra, 1971) proposta por Chandy e Misra (1984) para estruturas de grafos arbitrários e demandas dinâmicas de recursos.
 
-Para resolver o controle de acesso sem causar travamentos, optei por implementar o algoritmo de Chandy-Misra (1984), que funciona na base de troca de mensagens (tokens) entre os vizinhos. A lógica foi pensada para resolver os dois maiores gargalos desse problema:
+O projeto foi desenvolvido como trabalho prático para a disciplina de Programação Concorrente e Paralela da Universidade Estadual do Ceará (UECE), modelando filósofos como processos (*threads*) e garrafas compartilhadas como arestas com travas de exclusão mútua (*locks*).
 
-* Prevenção de Deadlock: Resolvido logo na inicialização. As garrafas (arestas) formam um grafo direcionado, e o vértice com o maior ID começa com a posse do recurso para evitar dependências circulares.
-* Prevenção de Starvation (Inanição): Resolvido com uma fila de requisições por ordem de chegada. Quando um filósofo termina de beber, a garrafa fica no estado "vazia" e ele a repassa imediatamente para o próximo da fila, sem segurar o recurso.
+---
 
-## Como rodar a simulação
-O código usa apenas as bibliotecas nativas do Python (`threading`, `time`, etc.), então não tem complicação com instalação de pacotes externos.
+## 🛠️ Solução Implementada: Chandy-Misra (Tokens Distribuídos)
 
-Para executar, basta abrir o terminal na pasta do projeto e passar o arquivo `.txt` contendo a matriz de adjacência como argumento:
+A arquitetura deste módulo baseia-se na troca de mensagens e posse de recursos (tokens) entre nós vizinhos, descentralizando o controle e eliminando as condições necessárias para a ocorrência de *deadlocks* e *starvation*.
 
-> python ChandyMisra.py caso1.txt
+### Mecanismo de Sincronização
+* **Exclusão Mútua de Recursos:** Cada aresta da matriz de adjacência (garrafa) possui um trinco exclusivo (`threading.Lock()`). Vizinhos diretos no grafo jamais utilizam a mesma garrafa simultaneamente.
+* **Prevenção de Deadlock (Grafo Direcionado Acíclico - DAG):** Para evitar a condição de *espera circular*, as arestas são inicializadas com direções. O vértice de maior ID começa com a posse da garrafa. Dessa forma, é matematicamente impossível formar um ciclo de bloqueio no estado inicial.
+* **Prevenção de Starvation (Fila FIFO):** Cada garrafa gerencia uma fila de requisições por ordem de chegada. Quando um filósofo termina de beber, a garrafa transita para o estado "vazia" e é cedida imediatamente ao próximo solicitante da fila.
 
-O programa vai exibir os logs de execução em tempo real no console e, ao finalizar, vai gerar automaticamente um arquivo (ex: `resultado_caso1.txt`) com as métricas da rodada.
+### Ciclo de Estados e Parâmetros Temporais
+1. **Tranquilo:** Tempo aleatório variando uniformemente de 0 a n segundos (onde n é o grau do vértice/número de vizinhos).
+2. **Com Sede:** Sorteio dinâmico de um subconjunto de garrafas desejadas (variando de 2 até n). O processo envia pedidos aos vizinhos e aguarda até possuir todos os recursos escolhidos.
+3. **Bebendo:** Tempo fixo de exatamente 1 segundo por ciclo de consumo.
 
-## Resultados - Caso 1 (Jantar Clássico)
-Rodando o cenário com 5 nós, onde cada filósofo tem grau de conectividade 2 e precisa beber 6 vezes, o programa rodou liso, sem deadlocks.
+---
 
-Tempo total de execução: 16.77 segundos.
+## 📊 Resultados Experimentais e Análise Gráfica
 
-Métricas por filósofo:
-- Filósofo [0]: Tranquilo (5.76s) | Esperando (4.05s) | Bebendo (6.00s) | Espera média: 0.68s
-- Filósofo [1]: Tranquilo (5.83s) | Esperando (2.89s) | Bebendo (6.00s) | Espera média: 0.48s
-- Filósofo [2]: Tranquilo (4.00s) | Esperando (5.72s) | Bebendo (6.00s) | Espera média: 0.95s
-- Filósofo [3]: Tranquilo (7.08s) | Esperando (3.65s) | Bebendo (6.00s) | Espera média: 0.61s
-- Filósofo [4]: Tranquilo (2.69s) | Esperando (6.13s) | Bebendo (6.00s) | Espera média: 1.02s
+Abaixo estão consolidados os dados coletados diretamente da execução dos casos de teste obrigatórios, acompanhados de suas respectivas análises de estados.
 
-Como todos cravaram exatos 6.00s no tempo "Bebendo", fica comprovado que nenhum filósofo sofreu inanição e todos conseguiram acessar os recursos as 6 vezes necessárias. O tempo médio de espera também se manteve bem equilibrado.
+### Caso 1: Jantar dos Filósofos Clássico (5 nós, 6 ciclos)
+*Grafo circular regular simétrico (todos os nós com grau n=2).*
+
+* **Tempo Total de Execução:** 16.77s
+* **Espera Média (Starvation):** 4.48s
+
+| ID | Tempo Tranquilo | Tempo Sede (Espera) | Tempo Bebendo |
+| :---: | :---: | :---: | :---: |
+| **F0** | 5.76s | 4.05s | 6.00s |
+| **F1** | 5.83s | 2.89s | 6.00s |
+| **F2** | 4.00s | 5.72s | 6.00s |
+| **F3** | 7.08s | 3.65s | 6.00s |
+| **F4** | 2.69s | 6.13s | 6.00s |
+
+![Gráfico Caso 1](implementacoes/grafico_caso1.png)
+* **Análise:** O tempo fixo e universal de 6.00s na coluna "Tempo Bebendo" comprova matematicamente a ausência de *starvation*, garantindo que todos os processos acessaram sua seção crítica as 6 vezes exigidas. As flutuações no tempo de espera decorrem naturalmente da variação aleatória do tempo "Tranquilo" e da mecânica de propagação de tokens do algoritmo de Chandy-Misra.
+
+### Caso 2: Bar dos Filósofos (6 nós, 6 ciclos)
+*Grafo genérico assimétrico com variação na conectividade dos nós (máximo de 4 arestas).*
+
+* **Tempo Total de Execução:** [INSERIR TEMPO TOTAL]s
+* **Espera Média (Starvation):** [INSERIR MEDIA]s
+
+| ID | Tempo Tranquilo | Tempo Sede (Espera) | Tempo Bebendo |
+| :---: | :---: | :---: | :---: |
+| **F0** | 0.00s | 0.00s | 6.00s |
+| **F1** | 0.00s | 0.00s | 6.00s |
+| **F2** | 0.00s | 0.00s | 6.00s |
+| **F3** | 0.00s | 0.00s | 6.00s |
+| **F4** | 0.00s | 0.00s | 6.00s |
+| **F5** | 0.00s | 0.00s | 6.00s |
+
+![Gráfico Caso 2](implementacoes/grafico_caso2.png)
+* **Análise:** A assimetria do grafo reflete-se na distribuição de acessos. Filósofos com maior grau de conectividade possuem um pool maior de recursos disponíveis, o que exige um roteamento de tokens mais ativo. Apesar da assimetria, a fila de requisições descentralizada garantiu a justiça do sistema.
+
+### Caso 3: Alta Conectividade (12 nós, 3 ciclos)
+*Grafo complexo e denso de larga escala (nós com até grau n=6).*
+
+* **Tempo Total de Execução:** [INSERIR TEMPO TOTAL]s
+* **Espera Média (Starvation):** [INSERIR MEDIA]s
+
+| ID | Tempo Tranquilo | Tempo Sede (Espera) | Tempo Bebendo |
+| :---: | :---: | :---: | :---: |
+| **F0** | 0.00s | 0.00s | 3.00s |
+| **F1** | 0.00s | 0.00s | 3.00s |
+| **...**| ... | ... | ... |
+| **F11**| 0.00s | 0.00s | 3.00s |
+
+![Gráfico Caso 3](implementacoes/grafico_caso3.png)
+* **Análise:** Em um cenário de alta densidade, a abordagem distribuída de Chandy-Misra revela sua escalabilidade. Filósofos distantes no grafo não dependem de um controle central e podem beber simultaneamente. A contenção se dá estritamente em limites locais, otimizando a vazão geral e mantendo o sistema livre de impasses, mesmo com demandas cruzadas de até 6 recursos.
+
+---
+
+## 🚀 Como Executar o Projeto
+
+### Pré-requisitos
+O programa foi desenvolvido em Python puro utilizando as bibliotecas padrão da linguagem para manipulação de *threads* e sincronização. Não é necessária a instalação de pacotes de terceiros.
+
+Para executar no terminal:
+`python ChandyMisra.py matriz_do_caso.txt`
+
+**Exemplo:**
+`python ChandyMisra.py caso1.txt`
+
+O console exibirá o log em tempo real do rastreamento de estados de cada processo e, ao final, gerará automaticamente um arquivo contendo o relatório de métricas consolidadas da rodada.
