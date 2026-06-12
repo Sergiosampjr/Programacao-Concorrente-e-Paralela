@@ -1,0 +1,42 @@
+
+==================================================
+🏆 RESULTADOS DA SIMULAÇÃO (Sem Ocorrência de Deadlock)
+==================================================
+Tempo Total de Execução: 22.05 segundos
+
+Filósofo [0] (Grau: 2 arestas):
+  - Tempo total Tranquilo: 5.67s
+  - Tempo total Com Sede:  5.11s
+  - Tempo total Bebendo:   6.00s
+  - Espera MÉDIA por ciclo:0.85s
+--------------------------------------------------
+Filósofo [1] (Grau: 2 arestas):
+  - Tempo total Tranquilo: 6.41s
+  - Tempo total Com Sede:  5.37s
+  - Tempo total Bebendo:   6.00s
+  - Espera MÉDIA por ciclo:0.89s
+--------------------------------------------------
+Filósofo [2] (Grau: 3 arestas):
+  - Tempo total Tranquilo: 5.68s
+  - Tempo total Com Sede:  4.95s
+  - Tempo total Bebendo:   6.00s
+  - Espera MÉDIA por ciclo:0.83s
+--------------------------------------------------
+Filósofo [3] (Grau: 3 arestas):
+  - Tempo total Tranquilo: 9.00s
+  - Tempo total Com Sede:  3.54s
+  - Tempo total Bebendo:   6.00s
+  - Espera MÉDIA por ciclo:0.59s
+--------------------------------------------------
+Filósofo [4] (Grau: 2 arestas):
+  - Tempo total Tranquilo: 5.96s
+  - Tempo total Com Sede:  1.57s
+  - Tempo total Bebendo:   6.00s
+  - Espera MÉDIA por ciclo:0.26s
+--------------------------------------------------
+Filósofo [5] (Grau: 4 arestas):
+  - Tempo total Tranquilo: 12.36s
+  - Tempo total Com Sede:  3.63s
+  - Tempo total Bebendo:   6.00s
+  - Espera MÉDIA por ciclo:0.60s
+--------------------------------------------------
