@@ -17,7 +17,7 @@ A arquitetura deste módulo baseia-se na troca de mensagens e posse de recursos 
 
 ### Ciclo de Estados e Parâmetros Temporais
 * **Tranquilo:** Tempo aleatório variando uniformemente de 0 a n segundos (onde n é o grau do vértice/número de vizinhos).
-* **Com Sede:** Sorteio dinâmico de um subconjunto de garrafas desejadas (variando de 2 até n). O processo envia pedidos aos vizinhos e aguarda até possuir todos os recursos escolhidos.
+* **Com Sede:** Sorteio dinâmico de um subconjunto de garrafas desejadas (variando de 2 até n). O processo envia pedidos aos vizinhos e aguarda até possuir todos os recursos escolheram.
 * **Bebendo:** Tempo fixo de exatamente 1 segundo por ciclo de consumo.
 
 ---
@@ -66,6 +66,8 @@ Abaixo estão consolidados os dados coletados diretamente da execução dos caso
 ### Pré-requisitos
 O programa foi desenvolvido em Python puro utilizando as bibliotecas padrão da linguagem para manipulação de *threads* e sincronização. Não é necessária a instalação de pacotes de terceiros.
 
-Para executar no terminal:
+Para rodar a simulação, abra o terminal na pasta do projeto e execute o comando correspondente ao arquivo de cenário que deseja testar:
+
+**Executar o Caso 1 (Jantar Clássico - 5 nós):**
 ```bash
-python ChandyMisra.py matriz_do_caso.txt
+python ChandyMisra.py caso1.txt
