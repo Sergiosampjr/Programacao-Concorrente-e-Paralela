@@ -1,0 +1,9 @@
+
+
+para executa 10 vezes cada caso:
+
+python main.py casos/caso1.txt --case caso1 --drinks 6 --runs 10 --quiet
+
+python main.py casos/caso2.txt --case caso2 --drinks 6 --runs 10 --quiet
+
+python main.py casos/caso3.txt --case caso3 --drinks 3 --runs 10 --quiet
