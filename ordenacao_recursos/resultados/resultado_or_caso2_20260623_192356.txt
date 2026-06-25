@@ -1,0 +1,220 @@
+
+====================================================================
+  Bar dos Filósofos — Ordenação de Recursos
+  Grafo  : or_caso2.txt (Grafo personalizado)
+  Bebidas: 6 por filósofo
+  Log    : resultados\resultado_or_caso2_20260623_192356.txt
+====================================================================
+
+  6 filósofos | 8 garrafas (arestas)
+
+[Filósofo  0] === Rodada 1/6 ===
+[Filósofo  0] TRANQUILO por 1.0s
+[Filósofo  1] === Rodada 1/6 ===
+[Filósofo  1] TRANQUILO por 0.9s
+[Filósofo  2] === Rodada 1/6 ===
+[Filósofo  3] === Rodada 1/6 ===
+[Filósofo  4] === Rodada 1/6 ===
+[Filósofo  2] TRANQUILO por 0.3s
+[Filósofo  5] === Rodada 1/6 ===
+[Filósofo  3] TRANQUILO por 0.1s
+[Filósofo  4] TRANQUILO por 0.8s
+[Filósofo  5] TRANQUILO por 2.4s
+[Filósofo  3] COM SEDE — quer 2 garrafa(s): ['(3, 4)', '(3, 5)']
+[Filósofo  3] BEBENDO  — segurando: ['(3, 4)', '(3, 5)']
+[Filósofo  2] COM SEDE — quer 3 garrafa(s): ['(1, 2)', '(2, 3)', '(2, 5)']
+[Filósofo  2] BEBENDO  — segurando: ['(1, 2)', '(2, 3)', '(2, 5)']
+[Filósofo  4] COM SEDE — quer 2 garrafa(s): ['(3, 4)', '(4, 5)']
+[Filósofo  1] COM SEDE — quer 2 garrafa(s): ['(0, 1)', '(1, 2)']
+[Filósofo  0] COM SEDE — quer 2 garrafa(s): ['(0, 1)', '(0, 5)']
+[Filósofo  3] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  4] BEBENDO  — segurando: ['(3, 4)', '(4, 5)']
+[Filósofo  3] === Rodada 2/6 ===
+[Filósofo  3] TRANQUILO por 0.6s
+[Filósofo  2] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  2] === Rodada 2/6 ===
+[Filósofo  2] TRANQUILO por 3.0s
+[Filósofo  1] BEBENDO  — segurando: ['(0, 1)', '(1, 2)']
+[Filósofo  3] COM SEDE — quer 3 garrafa(s): ['(2, 3)', '(3, 4)', '(3, 5)']
+[Filósofo  4] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  3] BEBENDO  — segurando: ['(2, 3)', '(3, 4)', '(3, 5)']
+[Filósofo  4] === Rodada 2/6 ===
+[Filósofo  4] TRANQUILO por 1.3s
+[Filósofo  1] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  0] BEBENDO  — segurando: ['(0, 1)', '(0, 5)']
+[Filósofo  1] === Rodada 2/6 ===
+[Filósofo  1] TRANQUILO por 1.8s
+[Filósofo  5] COM SEDE — quer 4 garrafa(s): ['(0, 5)', '(2, 5)', '(3, 5)', '(4, 5)']
+[Filósofo  3] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  3] === Rodada 3/6 ===
+[Filósofo  3] TRANQUILO por 3.0s
+[Filósofo  0] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  5] BEBENDO  — segurando: ['(0, 5)', '(2, 5)', '(3, 5)', '(4, 5)']
+[Filósofo  0] === Rodada 2/6 ===
+[Filósofo  0] TRANQUILO por 1.0s
+[Filósofo  4] COM SEDE — quer 2 garrafa(s): ['(3, 4)', '(4, 5)']
+[Filósofo  1] COM SEDE — quer 2 garrafa(s): ['(0, 1)', '(1, 2)']
+[Filósofo  1] BEBENDO  — segurando: ['(0, 1)', '(1, 2)']
+[Filósofo  2] COM SEDE — quer 3 garrafa(s): ['(1, 2)', '(2, 3)', '(2, 5)']
+[Filósofo  5] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  4] BEBENDO  — segurando: ['(3, 4)', '(4, 5)']
+[Filósofo  5] === Rodada 2/6 ===
+[Filósofo  5] TRANQUILO por 3.3s
+[Filósofo  0] COM SEDE — quer 2 garrafa(s): ['(0, 1)', '(0, 5)']
+[Filósofo  1] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  0] BEBENDO  — segurando: ['(0, 1)', '(0, 5)']
+[Filósofo  2] BEBENDO  — segurando: ['(1, 2)', '(2, 3)', '(2, 5)']
+[Filósofo  1] === Rodada 3/6 ===
+[Filósofo  1] TRANQUILO por 0.7s
+[Filósofo  4] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  4] === Rodada 3/6 ===
+[Filósofo  4] TRANQUILO por 0.8s
+[Filósofo  1] COM SEDE — quer 2 garrafa(s): ['(0, 1)', '(1, 2)']
+[Filósofo  2] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  2] === Rodada 3/6 ===
+[Filósofo  2] TRANQUILO por 0.6s
+[Filósofo  0] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  0] === Rodada 3/6 ===
+[Filósofo  1] BEBENDO  — segurando: ['(0, 1)', '(1, 2)']
+[Filósofo  0] TRANQUILO por 0.6s
+[Filósofo  3] COM SEDE — quer 3 garrafa(s): ['(2, 3)', '(3, 4)', '(3, 5)']
+[Filósofo  3] BEBENDO  — segurando: ['(2, 3)', '(3, 4)', '(3, 5)']
+[Filósofo  4] COM SEDE — quer 2 garrafa(s): ['(3, 4)', '(4, 5)']
+[Filósofo  0] COM SEDE — quer 2 garrafa(s): ['(0, 1)', '(0, 5)']
+[Filósofo  2] COM SEDE — quer 3 garrafa(s): ['(1, 2)', '(2, 3)', '(2, 5)']
+[Filósofo  1] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  0] BEBENDO  — segurando: ['(0, 1)', '(0, 5)']
+[Filósofo  1] === Rodada 4/6 ===
+[Filósofo  1] TRANQUILO por 0.9s
+[Filósofo  3] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  2] BEBENDO  — segurando: ['(1, 2)', '(2, 3)', '(2, 5)']
+[Filósofo  4] BEBENDO  — segurando: ['(3, 4)', '(4, 5)']
+[Filósofo  3] === Rodada 4/6 ===
+[Filósofo  3] TRANQUILO por 1.4s
+[Filósofo  5] COM SEDE — quer 2 garrafa(s): ['(0, 5)', '(4, 5)']
+[Filósofo  1] COM SEDE — quer 2 garrafa(s): ['(0, 1)', '(1, 2)']
+[Filósofo  0] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  0] === Rodada 4/6 ===
+[Filósofo  0] TRANQUILO por 0.8s
+[Filósofo  4] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  2] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  1] BEBENDO  — segurando: ['(0, 1)', '(1, 2)']
+[Filósofo  5] BEBENDO  — segurando: ['(0, 5)', '(4, 5)']
+[Filósofo  4] === Rodada 4/6 ===
+[Filósofo  4] TRANQUILO por 1.8s
+[Filósofo  2] === Rodada 4/6 ===
+[Filósofo  2] TRANQUILO por 1.6s
+[Filósofo  3] COM SEDE — quer 3 garrafa(s): ['(2, 3)', '(3, 4)', '(3, 5)']
+[Filósofo  3] BEBENDO  — segurando: ['(2, 3)', '(3, 4)', '(3, 5)']
+[Filósofo  0] COM SEDE — quer 2 garrafa(s): ['(0, 1)', '(0, 5)']
+[Filósofo  5] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  5] === Rodada 3/6 ===
+[Filósofo  0] BEBENDO  — segurando: ['(0, 1)', '(0, 5)']
+[Filósofo  1] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  1] === Rodada 5/6 ===
+[Filósofo  5] TRANQUILO por 3.4s
+[Filósofo  1] TRANQUILO por 0.5s
+[Filósofo  3] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  3] === Rodada 5/6 ===
+[Filósofo  3] TRANQUILO por 1.8s
+[Filósofo  1] COM SEDE — quer 2 garrafa(s): ['(0, 1)', '(1, 2)']
+[Filósofo  2] COM SEDE — quer 2 garrafa(s): ['(1, 2)', '(2, 3)']
+[Filósofo  2] BEBENDO  — segurando: ['(1, 2)', '(2, 3)']
+[Filósofo  4] COM SEDE — quer 2 garrafa(s): ['(3, 4)', '(4, 5)']
+[Filósofo  4] BEBENDO  — segurando: ['(3, 4)', '(4, 5)']
+[Filósofo  0] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  0] === Rodada 5/6 ===
+[Filósofo  0] TRANQUILO por 0.7s
+[Filósofo  2] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  1] BEBENDO  — segurando: ['(0, 1)', '(1, 2)']
+[Filósofo  2] === Rodada 5/6 ===
+[Filósofo  2] TRANQUILO por 2.7s
+[Filósofo  0] COM SEDE — quer 2 garrafa(s): ['(0, 1)', '(0, 5)']
+[Filósofo  4] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  4] === Rodada 5/6 ===
+[Filósofo  4] TRANQUILO por 0.4s
+[Filósofo  3] COM SEDE — quer 2 garrafa(s): ['(2, 3)', '(3, 4)']
+[Filósofo  3] BEBENDO  — segurando: ['(2, 3)', '(3, 4)']
+[Filósofo  4] COM SEDE — quer 2 garrafa(s): ['(3, 4)', '(4, 5)']
+[Filósofo  1] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  0] BEBENDO  — segurando: ['(0, 1)', '(0, 5)']
+[Filósofo  1] === Rodada 6/6 ===
+[Filósofo  1] TRANQUILO por 0.5s
+[Filósofo  3] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  3] === Rodada 6/6 ===
+[Filósofo  4] BEBENDO  — segurando: ['(3, 4)', '(4, 5)']
+[Filósofo  3] TRANQUILO por 2.2s
+[Filósofo  1] COM SEDE — quer 2 garrafa(s): ['(0, 1)', '(1, 2)']
+[Filósofo  5] COM SEDE — quer 3 garrafa(s): ['(2, 5)', '(3, 5)', '(4, 5)']
+[Filósofo  0] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  1] BEBENDO  — segurando: ['(0, 1)', '(1, 2)']
+[Filósofo  0] === Rodada 6/6 ===
+[Filósofo  0] TRANQUILO por 0.4s
+[Filósofo  0] COM SEDE — quer 2 garrafa(s): ['(0, 1)', '(0, 5)']
+[Filósofo  4] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  5] BEBENDO  — segurando: ['(2, 5)', '(3, 5)', '(4, 5)']
+[Filósofo  4] === Rodada 6/6 ===
+[Filósofo  4] TRANQUILO por 1.5s
+[Filósofo  2] COM SEDE — quer 3 garrafa(s): ['(1, 2)', '(2, 3)', '(2, 5)']
+[Filósofo  1] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  0] BEBENDO  — segurando: ['(0, 1)', '(0, 5)']
+[Filósofo  1] terminou todas as rodadas.
+[Filósofo  5] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  2] BEBENDO  — segurando: ['(1, 2)', '(2, 3)', '(2, 5)']
+[Filósofo  5] === Rodada 4/6 ===
+[Filósofo  5] TRANQUILO por 1.3s
+[Filósofo  3] COM SEDE — quer 2 garrafa(s): ['(3, 4)', '(3, 5)']
+[Filósofo  3] BEBENDO  — segurando: ['(3, 4)', '(3, 5)']
+[Filósofo  0] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  0] terminou todas as rodadas.
+[Filósofo  4] COM SEDE — quer 2 garrafa(s): ['(3, 4)', '(4, 5)']
+[Filósofo  2] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  2] === Rodada 6/6 ===
+[Filósofo  2] TRANQUILO por 2.2s
+[Filósofo  3] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  3] terminou todas as rodadas.
+[Filósofo  4] BEBENDO  — segurando: ['(3, 4)', '(4, 5)']
+[Filósofo  5] COM SEDE — quer 4 garrafa(s): ['(0, 5)', '(2, 5)', '(3, 5)', '(4, 5)']
+[Filósofo  4] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  5] BEBENDO  — segurando: ['(0, 5)', '(2, 5)', '(3, 5)', '(4, 5)']
+[Filósofo  4] terminou todas as rodadas.
+[Filósofo  2] COM SEDE — quer 3 garrafa(s): ['(1, 2)', '(2, 3)', '(2, 5)']
+[Filósofo  5] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  2] BEBENDO  — segurando: ['(1, 2)', '(2, 3)', '(2, 5)']
+[Filósofo  5] === Rodada 5/6 ===
+[Filósofo  5] TRANQUILO por 3.0s
+[Filósofo  2] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  2] terminou todas as rodadas.
+[Filósofo  5] COM SEDE — quer 2 garrafa(s): ['(3, 5)', '(4, 5)']
+[Filósofo  5] BEBENDO  — segurando: ['(3, 5)', '(4, 5)']
+[Filósofo  5] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  5] === Rodada 6/6 ===
+[Filósofo  5] TRANQUILO por 4.0s
+[Filósofo  5] COM SEDE — quer 4 garrafa(s): ['(0, 5)', '(2, 5)', '(3, 5)', '(4, 5)']
+[Filósofo  5] BEBENDO  — segurando: ['(0, 5)', '(2, 5)', '(3, 5)', '(4, 5)']
+[Filósofo  5] soltou as garrafas → voltando a TRANQUILO
+[Filósofo  5] terminou todas as rodadas.
+
+====================================================================
+  RELATÓRIO FINAL — Ordenação de Recursos
+  Grafo: Grafo personalizado
+====================================================================
+  Filósofo    Vizinhos  Tranquilo(s)  Com Sede(s)  Bebendo(s)
+--------------------------------------------------------------------
+  Fil. 0             2           4.54          4.25         6.04
+  Fil. 1             2           5.35          2.44         6.04
+  Fil. 2             3          10.46          2.10         6.03
+  Fil. 3             3           9.11          0.43         6.03
+  Fil. 4             2           6.73          3.82         6.03
+  Fil. 5             4          17.39          3.19         6.05
+--------------------------------------------------------------------
+  Tempo total de execução : 26.63s
+  Espera média (com sede) : 2.71s
+
+  Avaliação de starvation:
+  (filósofos com mesmo nº de vizinhos devem ter espera similar)
+--------------------------------------------------------------------
+  Grau 2 — Filósofos [0, 1, 4] — espera média: 3.50s
+  Grau 3 — Filósofos [2, 3] — espera média: 1.27s
+  Grau 4 — Filósofos [5] — espera média: 3.19s
+====================================================================
